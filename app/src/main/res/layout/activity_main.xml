@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="#2B2D30"
+    android:backgroundTint="#2465C1"
     tools:context=".MainActivity">
 
     <TextView
@@ -12,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_initial"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +28,10 @@
         android:layout_marginTop="160dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="43dp"
+        android:backgroundTint="#8CACDA"
         android:text="Button"
+        android:textColor="#000000"
+        android:textColorLink="#8CACDA"
         app:layout_constraintBottom_toTopOf="@+id/historialpedido"
         app:layout_constraintEnd_toStartOf="@+id/devolucion"
         app:layout_constraintStart_toEndOf="@+id/devolucion"
@@ -37,11 +43,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
         android:layout_marginBottom="43dp"
+        android:backgroundTint="#8CACDA"
         android:text="Button"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/boton4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pedidos"
-        app:layout_constraintTop_toBottomOf="@+id/text_initial" />
+        app:layout_constraintTop_toBottomOf="@+id/text_initial"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/button3"
@@ -49,7 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="46dp"
+        android:backgroundTint="#8CACDA"
         android:text="Button"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintEnd_toStartOf="@+id/historialdevolucion"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,7 +71,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="46dp"
+        android:backgroundTint="#8CACDA"
         android:text="Button"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button3" />
@@ -71,6 +85,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginEnd="49dp"
         android:text="@string/historial1"
+        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toStartOf="@+id/boton4"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,7 +95,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
+        android:shadowColor="#000000"
         android:text="@string/pedido"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/pedidos"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -90,6 +108,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="112dp"
         android:text="@string/devolucion"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/devolucion"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -99,6 +120,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="46dp"
         android:text="@string/historial2"
+        android:textColor="#000000"
+        android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/historialdevolucion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/historialpedido" />
@@ -111,6 +134,7 @@
         android:layout_marginTop="364dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
+        android:background="#8CACDA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +143,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/contadorTextView"
@@ -138,8 +162,10 @@
         android:layout_marginBottom="9dp"
         app:layout_constraintBottom_toTopOf="@id/pedidos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_initial"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/bombi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

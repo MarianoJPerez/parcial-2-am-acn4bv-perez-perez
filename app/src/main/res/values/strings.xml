@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Bombi S.A.</string>
     <string name="text_initial">Bombi S.A</string>
+    <string name="pedido">Nuevo Pedido</string>
+    <string name="devolucion">Devolucion</string>
+    <string name="historial1">Historial de pedidos</string>
+    <string name="historial2">Historial de devolucion</string>
+
 </resources>

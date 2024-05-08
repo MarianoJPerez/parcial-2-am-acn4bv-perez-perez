@@ -5,5 +5,9 @@
     <string name="devolucion">Devolucion</string>
     <string name="historial1">Historial de pedidos</string>
     <string name="historial2">Historial de devolucion</string>
+    <color name="colorPrimary">#2465C1</color>
+    <color name="colorsecundary">#8CACDA</color>
+
 
 </resources>
+

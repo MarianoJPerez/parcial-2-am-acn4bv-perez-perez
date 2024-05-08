@@ -13,106 +13,115 @@
         android:id="@+id/text_initial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="173dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="173dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/text_initial"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/pedidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="43dp"
         android:backgroundTint="#8CACDA"
-        android:text="Button"
+        android:text="Pedir"
         android:textColor="#000000"
         android:textColorLink="#8CACDA"
         app:layout_constraintBottom_toTopOf="@+id/historialpedido"
         app:layout_constraintEnd_toStartOf="@+id/devolucion"
-        app:layout_constraintStart_toEndOf="@+id/devolucion"
-        app:layout_constraintTop_toBottomOf="@+id/text_initial" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton1" />
 
     <Button
         android:id="@+id/devolucion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="43dp"
         android:backgroundTint="#8CACDA"
-        android:text="Button"
+        android:text="Devolver"
         android:textColor="#000000"
         android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/boton4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pedidos"
-        app:layout_constraintTop_toBottomOf="@+id/text_initial"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/boton2" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="125dp"
+        android:layout_height="52dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="46dp"
         android:backgroundTint="#8CACDA"
-        android:text="Button"
+        android:text="Ver Pedidos"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintEnd_toStartOf="@+id/historialdevolucion"
+        app:layout_constraintHorizontal_bias="0.761"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/historialdevolucion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="46dp"
+        android:layout_width="134dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="#8CACDA"
-        android:text="Button"
+        android:text="Ver Devoluciones"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3" />
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/boton4" />
 
     <TextView
         android:id="@+id/historialpedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
+        android:layout_marginTop="9dp"
         android:layout_marginEnd="49dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/historial1"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toStartOf="@+id/boton4"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pedidos" />
 
     <TextView
         android:id="@+id/boton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="99dp"
         android:shadowColor="#000000"
         android:text="@string/pedido"
         android:textColor="#000000"
         android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/pedidos"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/boton2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/boton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="112dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="92dp"
         android:text="@string/devolucion"
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/devolucion"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/boton4"
@@ -124,7 +133,8 @@
         android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/historialdevolucion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/historialpedido" />
+        app:layout_constraintStart_toEndOf="@+id/historialpedido"
+        app:layout_constraintTop_toBottomOf="@+id/devolucion" />
 
     <ScrollView
         android:id="@+id/RespuestaServidor"
@@ -157,15 +167,12 @@
         android:id="@+id/imageView"
         android:layout_width="146dp"
         android:layout_height="124dp"
-        android:layout_marginStart="132dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="133dp"
-        android:layout_marginBottom="9dp"
-        app:layout_constraintBottom_toTopOf="@id/pedidos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_initial"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/bombi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

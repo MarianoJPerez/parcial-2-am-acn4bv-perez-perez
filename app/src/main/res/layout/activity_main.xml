@@ -18,34 +18,35 @@
         android:layout_marginEnd="173dp"
         android:layout_marginBottom="8dp"
         android:text="@string/text_initial"
-        android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/pedidos"
         android:layout_width="133dp"
         android:layout_height="46dp"
         android:layout_marginStart="60dp"
-        android:backgroundTint="@color/colorsecundary"
+        android:background="@drawable/button_background"
         android:text="Pedir"
-        android:textColor="#000000"
-        android:textColorLink="#8CACDA"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/historialpedido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boton1" />
 
     <Button
         android:id="@+id/devolucion"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
         android:layout_width="135dp"
         android:layout_height="47dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/colorsecundary"
         android:text="Devolver"
-        android:textColor="#000000"
+
         android:textColorLink="#000000"
         app:layout_constraintBottom_toTopOf="@+id/boton4"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -58,7 +59,8 @@
         android:layout_marginBottom="44dp"
         android:backgroundTint="@color/colorsecundary"
         android:text="Ver Pedidos"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -70,7 +72,8 @@
         android:layout_marginBottom="44dp"
         android:backgroundTint="@color/colorsecundary"
         android:text="Ver Devoluciones"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
         app:layout_constraintBottom_toTopOf="@+id/RespuestaServidor"
         app:layout_constraintEnd_toEndOf="parent" />
 

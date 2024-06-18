@@ -3,7 +3,7 @@ package com.example.bombisa;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
+import android.widget.EditText;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +36,18 @@ FirebaseAuth mAuth;
 
         }
         public void createUser(View v){
-        String email = "tomas_113@hotmail.com";
-        String password = "pass1234";
+            EditText emailEditText = findViewById(R.id.emailEditText);
+            EditText passwordEditText = findViewById(R.id.passwordEditText);
+
+            String email = emailEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            if (email.isEmpty() || password.isEmpty()) {
+                Log.w("TAG", "Email or Password is empty");
+                return;
+            }
+
+            Log.d("TAG", "Attempting to create user with email: " + email);
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

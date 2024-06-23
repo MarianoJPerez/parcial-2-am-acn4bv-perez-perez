@@ -71,4 +71,5 @@
         app:layout_constraintBottom_toTopOf="@+id/crearusuario"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/bombi" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

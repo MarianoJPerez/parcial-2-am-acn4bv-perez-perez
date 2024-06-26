@@ -5,7 +5,7 @@
     <string name="devolucion">Devolucion</string>
     <string name="historial1">Historial de pedidos</string>
     <string name="historial2">Historial de devolucion</string>
-    <color name="colorPrimary">#2465C1</color>
+
     <color name="colorsecundary">#8CACDA</color>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -18,5 +18,9 @@
     <string name="login_failed">"Login failed"</string>
 
 
+    <string name="select_pan">Seleccionar Pan</string>
+    <string name="back">Volver</string>
+    <string name="select_product">Seleccione el producto que desea pedir.</string>
+    <string name="quantity_hint">Cantidad</string>
 </resources>
 

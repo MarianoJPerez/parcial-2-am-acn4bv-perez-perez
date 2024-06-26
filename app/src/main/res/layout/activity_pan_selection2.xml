@@ -1,49 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B2D30"
+    android:backgroundTint="@color/colorPrimary"
     android:padding="16dp">
 
     <Spinner
         android:id="@+id/panSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/quantityEditText"
+        android:layout_width="284dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="57dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/quantityEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_width="216dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="66dp"
+        android:background="@drawable/edit_text"
         android:hint="Cantidad"
         android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSelectPan"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/panSpinner" />
 
     <Button
         android:id="@+id/buttonSelectPan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="216dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="66dp"
         android:text="Seleccionar Pan"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/quantityEditText" />
 
     <Button
         android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="176dp"
+        android:layout_width="156dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="66dp"
         android:background="@drawable/button_background"
         android:text="Volver"
         android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSelectPan" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="65dp"
+        android:text="Seleccione el producto que desea pedir."
+        android:textColor="#000000"
+        android:textColorLink="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

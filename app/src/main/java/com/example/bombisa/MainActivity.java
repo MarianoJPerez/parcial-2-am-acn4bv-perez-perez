@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("Pan: " + pan + ", Cantidad: " + cantidad);
             panSelectionContainer.addView(textView);
         }
-    }
+    }//hola
     private void cerrarSesion() {
         Intent intent = new Intent(MainActivity.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

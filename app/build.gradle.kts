@@ -42,6 +42,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-auth")
 
+    implementation ("mysql:mysql-connector-java:8.0.32")
 
     implementation(libs.appcompat)
     implementation(libs.material)

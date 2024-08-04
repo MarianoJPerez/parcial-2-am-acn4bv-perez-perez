@@ -1,7 +1,7 @@
 package com.example.bombisa;
 
 public class Conexion {
-    private static final String URL = "jdbc:mysql://<HOST>:<PUERTO>/PanSelectionDB";
+    private static final String URL = "jdbc:mysql://<HOST>:<3306>/PanSelectionDB";
     private static final String USER = "<root>";
     private static final String PASSWORD = "<>";
     public Connection getConnection() {

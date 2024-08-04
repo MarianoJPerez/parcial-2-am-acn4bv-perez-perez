@@ -3,6 +3,7 @@ package com.example.bombisa;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,7 @@ public class PanSelectionActivity extends AppCompatActivity {
     private Button buttonSelectPan;
     private String selectedPan;
     private int selectedQuantity;
-
+    private Conexion conexion;
     // Lista para almacenar las selecciones
     private ArrayList<HashMap<String, String>> panSelections;
 
@@ -35,7 +36,7 @@ public class PanSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pan_selection2);
-
+       conexion =new Conexion();
         // Configurar insets para manejo de padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             v.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
@@ -127,4 +128,16 @@ public class PanSelectionActivity extends AppCompatActivity {
         }
         editor.apply();
     }
-}
+
+    private void insertarPanSeleccionEnBaseDeDatos(String userId, String pan, int cantidad) {
+        if (conexion != null) {
+            try {
+                conexion.insertarPanSeleccion(userId, pan, cantidad);
+                Log.d("PanSelectionActivity", "Insertado correctamente: " + pan + " - " + cantidad);
+            } catch (Exception e) {
+                Log.e("PanSelectionActivity", "Error al insertar en la base de datos", e);
+            }
+        } else {
+            Log.e("PanSelectionActivity", "Conexión a la base de datos no inicializada");
+        }
+    }}

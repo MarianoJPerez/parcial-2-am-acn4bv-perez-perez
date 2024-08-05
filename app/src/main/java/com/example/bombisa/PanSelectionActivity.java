@@ -132,6 +132,7 @@ public class PanSelectionActivity extends AppCompatActivity {
                 .load(IMAGE_URL)
                 .placeholder(R.drawable.error)
                 .error(R.drawable.error)
+                .fitCenter()
                 .into(imageView);
 
         // Configuro Retrofit
@@ -146,13 +147,8 @@ public class PanSelectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful()) {
-                    List<Post> posts = response.body();
-                    if (posts != null && !posts.isEmpty()) {
-                        Post firstPost = posts.get(0);
-                        textView.setText("Primer título: " + firstPost.getTitle());
-                    } else {
-                        textView.setText("No se encontraron datos.");
-                    }
+                    // No actualizar el TextView
+                    Log.d("PanSelectionActivity", "Datos de la API recibidos pero no actualizados.");
                 } else {
                     textView.setText("Error: " + response.code());
                 }
@@ -160,8 +156,8 @@ public class PanSelectionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                textView.setText("Error al cargar los datos."); // Mensaje breve de error
-                Log.e("PanSelectionActivity", "Error en la llamada a la API", t); // Registra el error completo en los logs
+                textView.setText("Error al cargar los datos.");
+                Log.e("PanSelectionActivity", "Error en la llamada a la API", t);
             }
         });
     }

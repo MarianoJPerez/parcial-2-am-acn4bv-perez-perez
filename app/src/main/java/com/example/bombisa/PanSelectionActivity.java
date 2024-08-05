@@ -3,12 +3,15 @@ package com.example.bombisa;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +19,14 @@ import androidx.core.view.ViewCompat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import com.bumptech.glide.Glide;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 public class PanSelectionActivity extends AppCompatActivity {
 
     private Spinner panSpinner;
@@ -24,13 +34,17 @@ public class PanSelectionActivity extends AppCompatActivity {
     private Button buttonSelectPan;
     private String selectedPan;
     private int selectedQuantity;
-
+    private ImageView imageView;
+    private TextView textView;
     // Lista para almacenar las selecciones
     private ArrayList<HashMap<String, String>> panSelections;
 
     // SharedPreferences para almacenar las selecciones
     private SharedPreferences sharedPreferences;
-
+    // url de ejemplo para la imagen
+    private static final String IMAGE_URL = "https://d2l55l4rhs1y6r.cloudfront.net/s3fs-public/headers/conocenos_header_banner-oso-n_0_0_1.png?VersionId=a9dklvJSUyZZ5bhTVymVGZqWXnM41T4b";
+    // base url para Retrofit
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +60,8 @@ public class PanSelectionActivity extends AppCompatActivity {
         panSpinner = findViewById(R.id.panSpinner);
         quantityEditText = findViewById(R.id.quantityEditText);
         buttonSelectPan = findViewById(R.id.buttonSelectPan);
-
+        imageView = findViewById(R.id.imageView);
+        textView = findViewById(R.id.textView);
         // Inicializar SharedPreferences
         sharedPreferences = getSharedPreferences("PanSelections", MODE_PRIVATE);
 
@@ -110,6 +125,43 @@ public class PanSelectionActivity extends AppCompatActivity {
                 savePanSelections();
                 // Volver a la MainActivity
                 finish();
+            }
+        });
+        // Cargo la imagen usando Glide
+        Glide.with(this)
+                .load(IMAGE_URL)
+                .placeholder(R.drawable.error)
+                .error(R.drawable.error)
+                .into(imageView);
+
+        // Configuro Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService apiService = retrofit.create(ApiService.class);
+        apiService.getPosts().enqueue(new Callback<List<Post>>() {
+
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    List<Post> posts = response.body();
+                    if (posts != null && !posts.isEmpty()) {
+                        Post firstPost = posts.get(0);
+                        textView.setText("Primer título: " + firstPost.getTitle());
+                    } else {
+                        textView.setText("No se encontraron datos.");
+                    }
+                } else {
+                    textView.setText("Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                textView.setText("Error al cargar los datos."); // Mensaje breve de error
+                Log.e("PanSelectionActivity", "Error en la llamada a la API", t); // Registra el error completo en los logs
             }
         });
     }

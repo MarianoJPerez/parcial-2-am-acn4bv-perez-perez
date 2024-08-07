@@ -1,7 +1,6 @@
 package com.example.bombisa;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,16 +9,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bombisa.ui.login.LoginActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = FirebaseFirestore.getInstance();
 
         Button pedirButton = findViewById(R.id.pedidos);
         pedirButton.setOnClickListener(new View.OnClickListener() {
@@ -44,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 cerrarSesion();
             }
         });
-
-        sharedPreferences = getSharedPreferences("PanSelections", MODE_PRIVATE);
     }
 
     private void abrirPanSelectionActivity() {
@@ -57,17 +57,28 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout panSelectionContainer = findViewById(R.id.panSelectionContainer);
         panSelectionContainer.removeAllViews();
 
-        int numPedidos = sharedPreferences.getAll().size() / 2; // Calculamos el número de pedidos guardados
+        // Obtener los pedidos de Firestore
+        db.collection("panSelections")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String pan = document.getString("Pan");
+                            String cantidad = document.getString("Cantidad");
 
-        for (int i = 0; i < numPedidos; i++) {
-            String pan = sharedPreferences.getString("Pan_" + i, "");
-            String cantidad = sharedPreferences.getString("Cantidad_" + i, "");
+                            TextView textView = new TextView(MainActivity.this);
+                            textView.setText("Pan: " + pan + ", Cantidad: " + cantidad);
+                            panSelectionContainer.addView(textView);
+                        }
+                    } else {
+                        // Manejar el error
+                        TextView errorTextView = new TextView(MainActivity.this);
+                        errorTextView.setText("Error al obtener los pedidos.");
+                        panSelectionContainer.addView(errorTextView);
+                    }
+                });
+    }
 
-            TextView textView = new TextView(this);
-            textView.setText("Pan: " + pan + ", Cantidad: " + cantidad);
-            panSelectionContainer.addView(textView);
-        }
-    }//hola
     private void cerrarSesion() {
         Intent intent = new Intent(MainActivity.this, Login.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

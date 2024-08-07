@@ -17,16 +17,19 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bumptech.glide.Glide;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 public class PanSelectionActivity extends AppCompatActivity {
 
     private Spinner panSpinner;
@@ -41,10 +44,15 @@ public class PanSelectionActivity extends AppCompatActivity {
 
     // SharedPreferences para almacenar las selecciones
     private SharedPreferences sharedPreferences;
+
+    // Firestore
+    private FirebaseFirestore db;
+
     // url de ejemplo para la imagen
     private static final String IMAGE_URL = "https://d2l55l4rhs1y6r.cloudfront.net/s3fs-public/headers/conocenos_header_banner-oso-n_0_0_1.png?VersionId=a9dklvJSUyZZ5bhTVymVGZqWXnM41T4b";
     // base url para Retrofit
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +72,9 @@ public class PanSelectionActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         // Inicializar SharedPreferences
         sharedPreferences = getSharedPreferences("PanSelections", MODE_PRIVATE);
+
+        // Inicializar Firestore
+        db = FirebaseFirestore.getInstance();
 
         // Lista para almacenar las selecciones
         panSelections = new ArrayList<>();
@@ -121,12 +132,13 @@ public class PanSelectionActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Guardar selecciones en SharedPreferences antes de volver a MainActivity
+                // Guardar selecciones en SharedPreferences y Firestore antes de volver a MainActivity
                 savePanSelections();
                 // Volver a la MainActivity
                 finish();
             }
         });
+
         // Cargo la imagen usando Glide
         Glide.with(this)
                 .load(IMAGE_URL)
@@ -163,16 +175,16 @@ public class PanSelectionActivity extends AppCompatActivity {
     }
 
     private void savePanSelections() {
-        // Limpiar las selecciones anteriores en SharedPreferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear().apply();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Guardar las nuevas selecciones en SharedPreferences
-        for (int i = 0; i < panSelections.size(); i++) {
-            HashMap<String, String> selection = panSelections.get(i);
-            editor.putString("Pan_" + i, selection.get("Pan"));
-            editor.putString("Cantidad_" + i, selection.get("Cantidad"));
+        for (HashMap<String, String> selection : panSelections) {
+            db.collection("panSelections")
+                    .add(selection)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d("PanSelectionActivity", "Seleccion guardada en Firestore con ID: " + documentReference.getId());
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w("PanSelectionActivity", "Error al guardar la selección en Firestore", e);
+                    });
         }
-        editor.apply();
-    }
-}
+    }}

@@ -1,7 +1,7 @@
 package com.example.bombisa;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -32,21 +37,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PanSelectionActivity extends AppCompatActivity {
 
-    private Spinner panSpinner;
     private EditText quantityEditText;
-    private Button buttonSelectPan;
     private String selectedPan;
     private int selectedQuantity;
-    private ImageView imageView;
     private TextView textView;
     // Lista para almacenar las selecciones
     private ArrayList<HashMap<String, String>> panSelections;
 
     // SharedPreferences para almacenar las selecciones
-    private SharedPreferences sharedPreferences;
 
-    // Firestore
-    private FirebaseFirestore db;
 
     // url de ejemplo para la imagen
     private static final String IMAGE_URL = "https://d2l55l4rhs1y6r.cloudfront.net/s3fs-public/headers/conocenos_header_banner-oso-n_0_0_1.png?VersionId=a9dklvJSUyZZ5bhTVymVGZqWXnM41T4b";
@@ -60,21 +59,22 @@ public class PanSelectionActivity extends AppCompatActivity {
 
         // Configurar insets para manejo de padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            v.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(), insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
-            return insets;
+            Insets systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemInsets.left, systemInsets.top, systemInsets.right, systemInsets.bottom);
+            return WindowInsetsCompat.CONSUMED;
         });
 
         // Inicializar los componentes de la UI
-        panSpinner = findViewById(R.id.panSpinner);
+        Spinner panSpinner = findViewById(R.id.panSpinner);
         quantityEditText = findViewById(R.id.quantityEditText);
-        buttonSelectPan = findViewById(R.id.buttonSelectPan);
-        imageView = findViewById(R.id.imageView);
+        Button buttonSelectPan = findViewById(R.id.buttonSelectPan);
+        ImageView imageView = findViewById(R.id.imageView);
         textView = findViewById(R.id.textView);
-        // Inicializar SharedPreferences
-        sharedPreferences = getSharedPreferences("PanSelections", MODE_PRIVATE);
+
+
 
         // Inicializar Firestore
-        db = FirebaseFirestore.getInstance();
+        // Firestore
 
         // Lista para almacenar las selecciones
         panSelections = new ArrayList<>();
@@ -101,42 +101,36 @@ public class PanSelectionActivity extends AppCompatActivity {
         });
 
         // Manejo del botón de selección
-        buttonSelectPan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String quantityText = quantityEditText.getText().toString();
+        buttonSelectPan.setOnClickListener(v -> {
+            String quantityText = quantityEditText.getText().toString();
 
-                if (selectedPan != null && !quantityText.isEmpty()) {
-                    selectedQuantity = Integer.parseInt(quantityText);
+            if (selectedPan != null && !quantityText.isEmpty()) {
+                selectedQuantity = Integer.parseInt(quantityText);
 
-                    // Crear un HashMap para almacenar la selección
-                    HashMap<String, String> selection = new HashMap<>();
-                    selection.put("Pan", selectedPan);
-                    selection.put("Cantidad", String.valueOf(selectedQuantity));
+                // Crear un HashMap para almacenar la selección
+                HashMap<String, String> selection = new HashMap<>();
+                selection.put("Pan", selectedPan);
+                selection.put("Cantidad", String.valueOf(selectedQuantity));
 
-                    // Añadir la selección a la lista
-                    panSelections.add(selection);
+                // Añadir la selección a la lista
+                panSelections.add(selection);
 
-                    Toast.makeText(PanSelectionActivity.this, "Seleccionaste: " + selectedPan + " - Cantidad: " + selectedQuantity, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PanSelectionActivity.this, "Seleccionaste: " + selectedPan + " - Cantidad: " + selectedQuantity, Toast.LENGTH_SHORT).show();
 
-                    // Limpiar el campo de cantidad después de agregar
-                    quantityEditText.setText("");
-                } else {
-                    Toast.makeText(PanSelectionActivity.this, "Por favor selecciona un pan y una cantidad", Toast.LENGTH_SHORT).show();
-                }
+                // Limpiar el campo de cantidad después de agregar
+                quantityEditText.setText("");
+            } else {
+                Toast.makeText(PanSelectionActivity.this, "Por favor selecciona un pan y una cantidad", Toast.LENGTH_SHORT).show();
             }
         });
 
         // Configurar el botón para volver a la MainActivity
         Button buttonBack = findViewById(R.id.buttonBack);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Guardar selecciones en SharedPreferences y Firestore antes de volver a MainActivity
-                savePanSelections();
-                // Volver a la MainActivity
-                finish();
-            }
+        buttonBack.setOnClickListener(v -> {
+            // Guardar selecciones en SharedPreferences y Firestore antes de volver a MainActivity
+            savePanSelections();
+            // Volver a la MainActivity
+            finish();
         });
 
         // Cargo la imagen usando Glide
@@ -154,10 +148,11 @@ public class PanSelectionActivity extends AppCompatActivity {
                 .build();
 
         ApiService apiService = retrofit.create(ApiService.class);
-        apiService.getPosts().enqueue(new Callback<List<Post>>() {
+        apiService.getPosts().enqueue(new Callback<>() {
 
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (response.isSuccessful()) {
                     // No actualizar el TextView
                     Log.d("PanSelectionActivity", "Datos de la API recibidos pero no actualizados.");
@@ -166,8 +161,9 @@ public class PanSelectionActivity extends AppCompatActivity {
                 }
             }
 
+            @SuppressLint("SetTextI18n")
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
                 textView.setText("Error al cargar los datos.");
                 Log.e("PanSelectionActivity", "Error en la llamada a la API", t);
             }
@@ -178,11 +174,9 @@ public class PanSelectionActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         for (HashMap<String, String> selection : panSelections) {
-            db.collection("panSelections")
+            Task<DocumentReference> documentReferenceTask = db.collection("panSelections")
                     .add(selection)
-                    .addOnSuccessListener(documentReference -> {
-                        Log.d("PanSelectionActivity", "Seleccion guardada en Firestore con ID: " + documentReference.getId());
-                    })
+                    .addOnSuccessListener(documentReference -> Log.d("PanSelectionActivity", "Seleccion guardada en Firestore con ID: " + documentReference.getId()))
                     .addOnFailureListener(e -> {
                         Log.w("PanSelectionActivity", "Error al guardar la selección en Firestore", e);
                     });

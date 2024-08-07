@@ -11,7 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,7 +39,21 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Referencia al ImageView en el layout
+        ImageView imageView = findViewById(R.id.imageView);
+
+        // URL de la imagen que quieres cargar
+        String imageUrl = "https://d2l55l4rhs1y6r.cloudfront.net/s3fs-public/headers/conocenos_header_banner-oso-n_0_0_1.png?VersionId=a9dklvJSUyZZ5bhTVymVGZqWXnM41T4b";
+
+        // Cargar la imagen usando Glide
+        Glide.with(this)
+                .load(imageUrl)
+                .placeholder(R.drawable.error)  // Imagen a mostrar mientras se carga la imagen real
+                .error(R.drawable.error)       // Imagen a mostrar si ocurre un error al cargar la imagen
+                .fitCenter()
+                .into(imageView);
     }
+
 
     public void createUser(View v) {
         EditText emailEditText = findViewById(R.id.emailEditText);
